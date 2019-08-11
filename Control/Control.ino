@@ -8,6 +8,8 @@
 #define BUTTONS_NUM 9
 
 Joystick_ Joystick;
+//Joystick_ Joystick(0x03, JOYSTICK_TYPE_GAMEPAD, 9, 0, false, false, false, false, false, false, false, false, false, false, false);
+
 int pin_map[BUTTONS_NUM] = {21, 2, 19, 3, 15, 5, 16, 7, 9};
 
 void setup(){
@@ -15,6 +17,10 @@ void setup(){
 	for(int i = 0; i < BUTTONS_NUM; i++){
 		pinMode(pin_map[i], INPUT);
 	}
+
+  // Initialize stick(This is for avoiding incorrect behavior on my computer)
+  Joystick.setXAxisRange(-127, 127);
+  Joystick.setYAxisRange(-127, 127);
 
 	// Initialize joystick library
 	Joystick.begin();
@@ -31,6 +37,11 @@ void loop(){
 			lastButtonState[i] = currentButtonState;
 		}
 	}
+
+  // The value of stick is always 0
+  Joystick.setXAxis(0);
+  Joystick.setYAxis(0);
+  
 	delay(50);
 }
 
